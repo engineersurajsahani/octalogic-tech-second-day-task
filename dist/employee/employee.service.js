@@ -26,17 +26,17 @@ let EmployeeService = class EmployeeService {
         return this.employeeRepository.save(newEmployee);
     }
     async findAll() {
-        return this.employeeRepository.find();
+        return this.employeeRepository.find({ relations: ['company'] });
     }
     async findOne(id) {
-        return this.employeeRepository.findOne({ where: { id } });
+        return this.employeeRepository.findOne({ where: { id }, relations: ['company'] });
     }
     async update(id, updateEmployeeDto) {
         await this.employeeRepository.update(id, updateEmployeeDto);
         return this.findOne(id);
     }
     async remove(id) {
-        await this.employeeRepository.delete(id);
+        await this.employeeRepository.softDelete(id);
     }
 };
 exports.EmployeeService = EmployeeService;

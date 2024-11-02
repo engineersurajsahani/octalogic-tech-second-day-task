@@ -1,8 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Entity,Column,PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Company } from '../../company/entities/company.entity';
+import { BaseEntity } from './base.entity';
 
 @Entity()
-export class Employee {
+export class Employee extends BaseEntity { 
   @PrimaryGeneratedColumn()
   @ApiProperty({ description: 'The unique identifier of the employee' })
   id: number;
@@ -22,4 +24,7 @@ export class Employee {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   @ApiProperty({ description: 'The salary of the employee', example: 50000.00 })
   salary: number;
+
+  @ManyToOne(() => Company, (company) => company.employees)
+  company: Company;
 }

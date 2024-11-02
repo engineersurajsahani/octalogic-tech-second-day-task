@@ -10,7 +10,7 @@ export class EmployeeService {
   constructor(
     @InjectRepository(Employee)
     private employeeRepository: Repository<Employee>,
-  ) {}
+  ) { }
 
   async create(createEmployeeDto: CreateEmployeeDto): Promise<Employee> {
     const newEmployee = this.employeeRepository.create(createEmployeeDto);
@@ -18,11 +18,11 @@ export class EmployeeService {
   }
 
   async findAll(): Promise<Employee[]> {
-    return this.employeeRepository.find();
+    return this.employeeRepository.find({ relations: ['company'] });
   }
 
   async findOne(id: number): Promise<Employee> {
-    return this.employeeRepository.findOne({ where: { id } });
+    return this.employeeRepository.findOne({ where: { id }, relations: ['company'] });
   }
 
   async update(id: number, updateEmployeeDto: UpdateEmployeeDto): Promise<Employee> {
@@ -30,7 +30,12 @@ export class EmployeeService {
     return this.findOne(id);
   }
 
+  // async remove(id: number): Promise<void> {
+  //   await this.employeeRepository.delete(id);
+  // }
+
   async remove(id: number): Promise<void> {
-    await this.employeeRepository.delete(id);
+    await this.employeeRepository.softDelete(id);
   }
+
 }

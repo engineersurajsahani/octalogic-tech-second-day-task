@@ -10,7 +10,9 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const employee_module_1 = require("./employee/employee.module");
+const company_module_1 = require("./company/company.module");
 const employee_entity_1 = require("./employee/entities/employee.entity");
+const company_entity_1 = require("./company/entities/company.entity");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -24,10 +26,11 @@ exports.AppModule = AppModule = __decorate([
                 username: 'postgres',
                 password: 'root',
                 database: 'employee_db',
-                entities: [employee_entity_1.Employee],
+                entities: [employee_entity_1.Employee, company_entity_1.Company],
                 synchronize: true,
             }),
             employee_module_1.EmployeeModule,
+            company_module_1.CompanyModule,
         ],
     })
 ], AppModule);

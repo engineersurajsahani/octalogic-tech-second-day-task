@@ -12,7 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Employee = void 0;
 const swagger_1 = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
-let Employee = class Employee {
+const company_entity_1 = require("../../company/entities/company.entity");
+const base_entity_1 = require("./base.entity");
+let Employee = class Employee extends base_entity_1.BaseEntity {
 };
 exports.Employee = Employee;
 __decorate([
@@ -40,6 +42,10 @@ __decorate([
     (0, swagger_1.ApiProperty)({ description: 'The salary of the employee', example: 50000.00 }),
     __metadata("design:type", Number)
 ], Employee.prototype, "salary", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => company_entity_1.Company, (company) => company.employees),
+    __metadata("design:type", company_entity_1.Company)
+], Employee.prototype, "company", void 0);
 exports.Employee = Employee = __decorate([
     (0, typeorm_1.Entity)()
 ], Employee);
